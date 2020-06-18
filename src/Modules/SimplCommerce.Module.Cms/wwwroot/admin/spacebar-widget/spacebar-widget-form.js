@@ -2,9 +2,8 @@
 (function ($) {
     angular
         .module('simplAdmin.cms')
-        .controller('SpaceBarWidgetFormCtrl', SpaceBarWidgetFormCtrl);
+        .controller('SpaceBarWidgetFormCtrl', ['$state', '$stateParams', 'spacebarWidgetService', 'translateService', SpaceBarWidgetFormCtrl]);
 
-    /* @ngInject */
     function SpaceBarWidgetFormCtrl($state, $stateParams, spacebarWidgetService, translateService) {
         var vm = this;
         vm.translate = translateService;
@@ -21,12 +20,12 @@
 
         vm.addItem = function addItem() {
             vm.widgetInstance.items.push({});
-        }
+        };
 
         vm.removeItem = function removeItem(item) {
             var index = vm.widgetInstance.items.indexOf(item);
             vm.widgetInstance.items.splice(index, 1);
-        }
+        };
 
         vm.save = function save() {
             var promise;

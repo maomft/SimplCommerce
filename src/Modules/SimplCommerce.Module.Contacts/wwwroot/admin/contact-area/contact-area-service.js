@@ -2,16 +2,17 @@
 (function () {
     angular
         .module('simplAdmin.contacts')
-        .factory('contactAreaService', contactAreaService);
+        .factory('contactAreaService', ['$http', contactAreaService]);
 
-    /* @ngInject */
     function contactAreaService($http) {
         var service = {
             getContactArea: getContactArea,
             createContactArea: createContactArea,
             editContactArea: editContactArea,
             deleteContactArea: deleteContactArea,
-            getContactAreas: getContactAreas
+            getContactAreas: getContactAreas,
+            getContactAreaTranslation: getContactAreaTranslation,
+            editContactAreaTranslation: editContactAreaTranslation
         };
         return service;
 
@@ -33,6 +34,14 @@
 
         function deleteContactArea(contactArea) {
             return $http.delete('api/contact-area/' + contactArea.id, null);
+        }
+
+        function getContactAreaTranslation(id, culture) {
+            return $http.get('api/contact-area-translations/' + id + '?culture=' + culture);
+        }
+
+        function editContactAreaTranslation(id, culture, model) {
+            return $http.put('api/contact-area-translations/' + id + '?culture=' + culture, model);
         }
     }
 })();

@@ -2,9 +2,8 @@
 (function () {
     angular
         .module('simplAdmin.core')
-        .factory('themeService', themeService);
+        .factory('themeService', ['$http', themeService]);
 
-    /* @ngInject */
     function themeService($http) {
         var service = {
             getThemes: getThemes,
@@ -37,7 +36,7 @@
         }
 
         function installTheme(name) {
-            return $http.put('/api/online-themes/'+name+'/install')
+            return $http.put('/api/online-themes/' + name + '/install');
         }
     }
 })();

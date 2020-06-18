@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
-using SimplCommerce.Infrastructure;
+using SimplCommerce.Infrastructure.Modules;
 using SimplCommerce.Module.ShippingPrices.Services;
 using SimplCommerce.Module.ShippingFree.Services;
 
@@ -14,7 +14,7 @@ namespace SimplCommerce.Module.ShippingFree
             services.AddTransient<IShippingPriceServiceProvider, FreeShippingServiceProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
         }

@@ -2,10 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using MediatR;
-using SimplCommerce.Infrastructure;
-using SimplCommerce.Module.ActivityLog.Events;
+using SimplCommerce.Infrastructure.Modules;
 using SimplCommerce.Module.Core.Events;
 using SimplCommerce.Module.ProductRecentlyViewed.Data;
+using SimplCommerce.Module.ProductRecentlyViewed.Events;
+using SimplCommerce.Infrastructure;
 
 namespace SimplCommerce.Module.ProductRecentlyViewed
 {
@@ -15,9 +16,11 @@ namespace SimplCommerce.Module.ProductRecentlyViewed
         {
             services.AddTransient<IRecentlyViewedProductRepository, RecentlyViewedProductRepository>();
             services.AddTransient<INotificationHandler<EntityViewed>, EntityViewedHandler>();
+
+            GlobalConfiguration.RegisterAngularModule("simplAdmin.recentlyViewed");
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
         }

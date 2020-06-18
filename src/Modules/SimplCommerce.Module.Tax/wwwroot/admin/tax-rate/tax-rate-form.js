@@ -2,9 +2,8 @@
 (function ($) {
     angular
         .module('simplAdmin.tax')
-        .controller('TaxRateFormCtrl', TaxRateFormCtrl);
+        .controller('TaxRateFormCtrl', ['$state', '$stateParams', 'taxClassService', 'taxRateService', 'translateService', TaxRateFormCtrl]);
 
-    /* @ngInject */
     function TaxRateFormCtrl($state, $stateParams, taxClassService, taxRateService, translateService) {
         var vm = this;
         vm.translate = translateService;
@@ -44,7 +43,7 @@
             taxRateService.getStatesOrProvinces(vm.taxRate.countryId).then(function (result) {
                 vm.statesOrProvinces = result.data;
             });
-        }
+        };
 
         function getCountries() {
             taxRateService.getCountries().then(function (result) {

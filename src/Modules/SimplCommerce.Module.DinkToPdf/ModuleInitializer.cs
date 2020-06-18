@@ -3,7 +3,7 @@ using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using SimplCommerce.Infrastructure;
+using SimplCommerce.Infrastructure.Modules;
 using SimplCommerce.Module.Core.Services;
 
 namespace SimplCommerce.Module.DinkToPdf
@@ -16,7 +16,7 @@ namespace SimplCommerce.Module.DinkToPdf
             serviceCollection.AddTransient<IPdfConverter, DinkToPdfConverter>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
         }
     }

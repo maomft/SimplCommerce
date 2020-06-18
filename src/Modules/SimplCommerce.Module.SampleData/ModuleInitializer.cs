@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
-using SimplCommerce.Infrastructure;
+using SimplCommerce.Infrastructure.Modules;
 using SimplCommerce.Module.SampleData.Data;
 using SimplCommerce.Module.SampleData.Services;
 
@@ -15,7 +15,7 @@ namespace SimplCommerce.Module.SampleData
             services.AddTransient<ISampleDataService, SampleDataService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
         }

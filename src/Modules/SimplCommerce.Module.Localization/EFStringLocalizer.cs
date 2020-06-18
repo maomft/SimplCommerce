@@ -13,6 +13,7 @@ namespace SimplCommerce.Module.Localization
     public class EfStringLocalizer : IStringLocalizer
     {
         private IMemoryCache _resourcesCache;
+        private readonly MemoryCacheEntryOptions _cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(30));
         private readonly IServiceProvider _serviceProvider;
 
         public EfStringLocalizer(IServiceProvider serviceProvider, IMemoryCache resourcesCache)
@@ -60,7 +61,37 @@ namespace SimplCommerce.Module.Localization
             var resources = LoadResources(culture);
             var value = resources.SingleOrDefault(r => r.Key == name)?.Value;
 
+            if (value == null)
+            {
+                AutoRegisterNewString(name, culture);
+            }
+
             return value;
+        }
+
+        private void AutoRegisterNewString(string name, string culture)
+        {
+            if (culture != "en-US") //GlobalConfiguration.DefaultCulture
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var resourceRepository = scope.ServiceProvider.GetRequiredService<IRepository<Resource>>();
+
+                    var res = new Resource()
+                    {
+                        CultureId = culture,
+                        Key = name,
+                        Value = name
+                    };
+
+                    resourceRepository.Add(res);
+                    resourceRepository.SaveChanges();
+
+                    var freshResourcesCache = LoadResources(culture);
+                    freshResourcesCache.Add(res);
+                    _resourcesCache.Set(culture, freshResourcesCache, _cacheEntryOptions);
+                }
+            }
         }
 
         private IList<Resource> LoadResources(string culture)
@@ -73,7 +104,7 @@ namespace SimplCommerce.Module.Localization
                     resources = resourceRepository.Query().Where(r => r.Culture.Id == culture).ToList();
                 }
                 
-                _resourcesCache.Set(culture, resources);
+                _resourcesCache.Set(culture, resources, _cacheEntryOptions);
             }
 
             return resources;

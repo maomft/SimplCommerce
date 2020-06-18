@@ -2,9 +2,8 @@
 (function () {
     angular
         .module('simplAdmin.contacts')
-        .controller('ContactListCtrl', ContactListCtrl);
+        .controller('ContactListCtrl', ['contactService', 'contactAreaService', 'translateService', ContactListCtrl]);
 
-    /* @ngInject */
     function ContactListCtrl(contactService, contactAreaService, translateService) {
         var vm = this;
         vm.tableStateRef = {};
@@ -19,10 +18,10 @@
             vm.tableStateRef = tableState;
             vm.isLoading = true;
             contactService.getContacts(tableState).then(function (result) {
-                vm.contacts = result.data.items
+                vm.contacts = result.data.items;
                 tableState.pagination.numberOfPages = result.data.numberOfPages;
                 tableState.pagination.totalItemCount = result.data.totalRecord;
-                vm.isLoading = false;;
+                vm.isLoading = false;
             });
         };        
 

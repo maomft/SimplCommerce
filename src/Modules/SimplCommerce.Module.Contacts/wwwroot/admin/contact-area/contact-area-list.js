@@ -2,13 +2,13 @@
 (function () {
     angular
         .module('simplAdmin.contacts')
-        .controller('ContactAreaListCtrl', ContactAreaListCtrl);
+        .controller('ContactAreaListCtrl', ['contactAreaService', 'translateService', '$window', ContactAreaListCtrl]);
 
-    /* @ngInject */
-    function ContactAreaListCtrl(contactAreaService, translateService) {
+    function ContactAreaListCtrl(contactAreaService, translateService, $window) {
         var vm = this;
         vm.translate = translateService;
         vm.contactAreas = [];
+        vm.enableCultures = $window.Global_EnableCultures;
 
         vm.getContactAreas = function getContactAreas() {
             contactAreaService.getContactAreas().then(function (result) {

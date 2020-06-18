@@ -2,9 +2,8 @@
 (function () {
     angular
         .module('simplAdmin.catalog')
-        .controller('CategoryFormCtrl', CategoryFormCtrl);
+        .controller('CategoryFormCtrl', ['$q', '$state', '$stateParams', 'categoryService', 'translateService', CategoryFormCtrl]);
 
-    /* @ngInject */
     function CategoryFormCtrl($q, $state, $stateParams, categoryService, translateService) {
         var vm = this,
             tableStateRef;
@@ -69,20 +68,20 @@
             product.isEditing = true;
             product.editingIsFeaturedProduct = product.isFeaturedProduct;
             product.editingDisplayOrder = product.displayOrder;
-        }
+        };
 
         vm.saveProduct = function saveProduct(product) {
             var productCategory = {
-                'id' : product.id,
-                'isFeaturedProduct' : product.editingIsFeaturedProduct,
-                'displayOrder' : product.displayOrder
+                'id': product.id,
+                'isFeaturedProduct': product.editingIsFeaturedProduct,
+                'displayOrder': product.displayOrder
             };
             categoryService.saveProduct(productCategory).then(function () {
                 product.isEditing = false;
                 product.isFeaturedProduct = product.editingIsFeaturedProduct;
                 product.displayOrder = product.editingDisplayOrder;
             });
-        }
+        };
 
         function init() {
             if (vm.isEditMode) {

@@ -1,4 +1,4 @@
-﻿using SimplCommerce.Infrastructure;
+﻿using SimplCommerce.Infrastructure.Modules;
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +14,7 @@ namespace SimplCommerce.Module.EmailSenderSmtp
             serviceCollection.AddScoped<IEmailSender, EmailSender>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
         }
     }

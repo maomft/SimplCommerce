@@ -2,9 +2,8 @@
 (function ($) {
     angular
         .module('simplAdmin.catalog')
-        .controller('SimpleProductWidgetFormCtrl', SimpleProductWidgetFormCtrl);
+        .controller('SimpleProductWidgetFormCtrl', ['$state', '$stateParams', 'simpleProductWidgetService', 'translateService', SimpleProductWidgetFormCtrl]);
 
-    /* @ngInject */
     function SimpleProductWidgetFormCtrl($state, $stateParams, simpleProductWidgetService, translateService) {
         var vm = this;
         vm.translate = translateService;
@@ -22,7 +21,6 @@
             var promise;
 
             if (vm.isEditMode) {
-                console.log(vm.widgetInstance)
                 promise = simpleProductWidgetService.editSimpleProductWidget(vm.widgetInstance);
             } else {
                 promise = simpleProductWidgetService.createSimpleProductWidget(vm.widgetInstance);
